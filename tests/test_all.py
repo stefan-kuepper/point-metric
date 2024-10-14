@@ -47,7 +47,7 @@ def test_calculate_sum_assigment_cost_permute():
             for g_perm in permutations(g):
                 cm_p = calculate_cost_matrix(p_perm,g_perm) # pyright: ignore
                 cost_p = calculate_sum_assigment_cost(cm_p)
-                print(f"{p_perm}, {g_perm}")
+            
                 assert(isclose(cost_p, cost1))
 
 def test_calculate_point_metric_permute():

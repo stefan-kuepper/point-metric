@@ -15,13 +15,12 @@ def distance(p1: Point, p2: Point):
 
 
 def calculate_cost_matrix(pred: List[Point], gt: List[Point]):
-    m = np.zeros([len(pred), len(gt)])
+    pred_np = np.array(pred)
+    gt_np = np.array(gt)
 
-    for p in range(len(pred)):
-        for g in range(len(gt)):
-            m[p, g] = distance(pred[p], gt[g])
+    dist_mat = np.sqrt(((pred_np[:, None] - gt_np[None, :])**2).sum(-1))
 
-    return m
+    return dist_mat.reshape((len(pred),len(gt)))
 
 
 def calculate_sum_assigment_cost(cost_matrix: np.ndarray) -> float:
@@ -35,7 +34,7 @@ def count_extra_or_missing(pred: List[Point], gt: List[Point]):
 
     return abs(lp-lg)
 
-def point_metric(pred: List[Point], gt: List[Point], k = 1):
+def point_metric(pred: List[Point], gt: List[Point], k = 100):
     cm = calculate_cost_matrix(pred, gt)
     cost_displacement = calculate_sum_assigment_cost(cm)
     cost_extra_missing = count_extra_or_missing(pred, gt)
