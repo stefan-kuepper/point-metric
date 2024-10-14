@@ -18,9 +18,15 @@ def calculate_cost_matrix(pred: List[Point], gt: List[Point]):
     pred_np = np.array(pred)
     gt_np = np.array(gt)
 
-    dist_mat = np.sqrt(((pred_np[:, None] - gt_np[None, :])**2).sum(-1))
+    #dist_mat = np.sqrt(((pred_np[:, None] - gt_np[None, :])**2).sum(-1))
 
-    return dist_mat.reshape((len(pred),len(gt)))
+    m = np.zeros([len(pred), len(gt)])
+
+    for p in range(len(pred)):
+        for g in range(len(gt)):
+            m[p, g] = distance(pred[p], gt[g])
+
+    return m
 
 
 def calculate_sum_assigment_cost(cost_matrix: np.ndarray) -> float:
