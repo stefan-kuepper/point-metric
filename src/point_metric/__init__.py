@@ -18,7 +18,7 @@ def calculate_cost_matrix(pred: List[Point], gt: List[Point]):
     pred_np = np.array(pred)
     gt_np = np.array(gt)
 
-    #dist_mat = np.sqrt(((pred_np[:, None] - gt_np[None, :])**2).sum(-1))
+    # dist_mat = np.sqrt(((pred_np[:, None] - gt_np[None, :])**2).sum(-1))
 
     m = np.zeros([len(pred), len(gt)])
 
@@ -34,13 +34,26 @@ def calculate_sum_assigment_cost(cost_matrix: np.ndarray) -> float:
 
     return float(cost_matrix[row_ind, col_ind].sum())
 
+
 def count_extra_or_missing(pred: List[Point], gt: List[Point]):
     lp = len(pred)
     lg = len(gt)
 
-    return abs(lp-lg)
+    return abs(lp - lg)
 
-def point_metric(pred: List[Point], gt: List[Point], k = 100):
+
+def point_metric(pred: List[Point], gt: List[Point], k=100):
+    """
+    Calculates a point metric using the Hungarian algorithm with a penalty for extra or missing points.
+
+    Args:
+        pred (List[Point]): A list of predicted points.
+        gt (List[Point]): A list of ground truth points.
+        k (float, optional): The penalty for extra or missing points. Defaults to 100.
+
+    Returns:
+        float: The point metric.
+    """
     cm = calculate_cost_matrix(pred, gt)
     cost_displacement = calculate_sum_assigment_cost(cm)
     cost_extra_missing = count_extra_or_missing(pred, gt)
