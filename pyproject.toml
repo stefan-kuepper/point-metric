@@ -1,7 +1,7 @@
 [project]
 name = "point-metric"
-version = "0.1.1"
-description = "Add your description here"
+version = "0.2.0"
+description = "A metric for evaluating the similarity between two sets of points"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = ["numpy<2", "scipy>=1.14.1"]
